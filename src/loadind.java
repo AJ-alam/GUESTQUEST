@@ -113,7 +113,7 @@ public class loadind extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Signin ab = new Signin();
+        Sign_Up ab = new Sign_Up();
         ab.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 

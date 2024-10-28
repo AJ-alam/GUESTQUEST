@@ -1,10 +1,9 @@
 import java.sql.*;
-public class Signin extends javax.swing.JFrame {
+import javax.swing.*;
+import java.awt.*;
+public class Sign_Up extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Signin
-     */
-    public Signin() {
+    public Sign_Up() {
         initComponents();
     }
 
@@ -226,27 +225,27 @@ public class Signin extends javax.swing.JFrame {
         // Check if all validations passed
         if (isValid) {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/guestquest", "root", "")) {
-                // Create statement for executing the SQL commands
-                Statement stmt = con.createStatement();
-                
-                // Insert into stdinfo, excluding the auto-incremented User_ID
-                String insertQuery = "INSERT INTO Users (username, email, password) VALUES ('" + username + "', '" + email + "', '" + password + "')";
-                stmt.executeUpdate(insertQuery); // Execute the insert
+            // Singleton Database Connection Instance
+            Connection con = DatabaseConnection.getInstance().getConnection();
 
+            // Use PreparedStatement for SQL injection safety
+            String insertQuery = "INSERT INTO User (User_Name, User_Email, Password) VALUES (?, ?, ?)";
+            try (PreparedStatement pstmt = con.prepareStatement(insertQuery)) {
+                pstmt.setString(1, username);
+                pstmt.setString(2, email);
+                pstmt.setString(3, password);
+                pstmt.executeUpdate();
 
                 // Registration successful
                 javax.swing.JOptionPane.showMessageDialog(this, "Sign-up successful!", "Success", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-                loadind l=new loadind();
-                l.setVisible(true);
+                LOGIN si = new LOGIN();
+                si.setVisible(true);
                 this.dispose();
-               
             } catch (SQLException e) {
                 System.out.println("SQL Exception: " + e.getMessage());
             }
-        } catch (ClassNotFoundException e) {
-            System.out.println("MySQL JDBC Driver not found.");
+        } catch (Exception e) {
+            System.out.println("Database connection error.");
         }
     } else {
         // Show validation errors if any
@@ -279,20 +278,21 @@ public class Signin extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Signin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sign_Up.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Signin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sign_Up.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Signin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sign_Up.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Signin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Sign_Up.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Signin().setVisible(true);
+                new Sign_Up().setVisible(true);
             }
         });
     }

@@ -150,35 +150,31 @@ public class LOGIN extends javax.swing.JFrame {
     // Check credentials against the database
     if (isValid) {
         try {
-            Class.forName("com.mysql.jdbc.Driver"); // Use the updated JDBC driver
-            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/guestquest", "root", "")) {
-                // Use a PreparedStatement to prevent SQL injection
-                String selectQuery = "SELECT * FROM Users WHERE username = ? AND Password = ?";
-                try (PreparedStatement pstmt = con.prepareStatement(selectQuery)) {
-                    pstmt.setString(1, username);
-                    pstmt.setString(2, password);
+            // Use Singleton instance for database connection
+        Connection con = DatabaseConnection.getInstance().getConnection();
+        
+        String query = "SELECT User_ID, User_Name FROM User WHERE User_Name = ? AND Password = ?";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            ResultSet rs = pstmt.executeQuery();
 
-                    // Execute the select query
-                    ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this, "Sign-in successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-                    if (rs.next()) {
-                        // Successful sign in
-                        JOptionPane.showMessageDialog(this, "Sign-in successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                        // Proceed to the next screen or functionality
-                    } else {
-                        // Invalid credentials
-                        JOptionPane.showMessageDialog(this, "Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            } catch (SQLException e) {
+                // Pass both username and ID to First_Page
+                home h=new home();
+                h.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid username or password.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        }catch (SQLException e) {
                 System.out.println("SQL Exception: " + e.getMessage());
                 JOptionPane.showMessageDialog(this, "Database connection error. Please try again later.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (ClassNotFoundException e) {
-            System.out.println("MySQL JDBC Driver not found.");
-            JOptionPane.showMessageDialog(this, "Database driver not found. Please contact support.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
