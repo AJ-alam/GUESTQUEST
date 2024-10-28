@@ -153,7 +153,7 @@ public class LOGIN extends javax.swing.JFrame {
             // Use Singleton instance for database connection
         Connection con = DatabaseConnection.getInstance().getConnection();
         
-        String query = "SELECT User_ID, User_Name FROM User WHERE User_Name = ? AND Password = ?";
+        String query = "SELECT id, username FROM users WHERE username = ? AND password = ?";
         try (PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setString(1, username);
             pstmt.setString(2, password);

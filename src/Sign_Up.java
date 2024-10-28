@@ -229,7 +229,7 @@ public class Sign_Up extends javax.swing.JFrame {
             Connection con = DatabaseConnection.getInstance().getConnection();
 
             // Use PreparedStatement for SQL injection safety
-            String insertQuery = "INSERT INTO User (User_Name, User_Email, Password) VALUES (?, ?, ?)";
+            String insertQuery = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
             try (PreparedStatement pstmt = con.prepareStatement(insertQuery)) {
                 pstmt.setString(1, username);
                 pstmt.setString(2, email);
