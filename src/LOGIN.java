@@ -160,10 +160,11 @@ public class LOGIN extends javax.swing.JFrame {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
+                String id=rs.getString("id");
                 JOptionPane.showMessageDialog(this, "Sign-in successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 // Pass both username and ID to First_Page
-                home h=new home();
+                home h=new home(id);
                 h.setVisible(true);
                 this.dispose();
             } else {

@@ -12,6 +12,11 @@ public class home extends javax.swing.JFrame {
     /**
      * Creates new form home
      */
+    String id;
+    home(String id) {
+        initComponents();
+        this.id=id;
+    }
     public home() {
         initComponents();
     }
@@ -53,9 +58,19 @@ public class home extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Snap ITC", 0, 12)); // NOI18N
         jButton1.setText("CHECK BOOKING");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Snap ITC", 0, 12)); // NOI18N
         jButton3.setText("BOOK NOW");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setFont(new java.awt.Font("Snap ITC", 0, 12)); // NOI18N
         jButton4.setText("CALCULATE FARE");
@@ -68,7 +83,7 @@ public class home extends javax.swing.JFrame {
         jButton5.setBackground(new java.awt.Color(0, 0, 0));
         jButton5.setFont(new java.awt.Font("Snap ITC", 0, 10)); // NOI18N
         jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("BACK");
+        jButton5.setText("LOGOUT");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -167,6 +182,20 @@ public class home extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+   Booknow L=new Booknow(id);
+        L.setVisible(true);
+        this.dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Check_Booking C=new Check_Booking();
+        C.setVisible(true);
+        this.dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
